@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    networks:
+      - local-keycloak
+
+  keycloak:
+    depends_on:
+      - mysql
+    container_name: local_keycloak
+    image: quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
+    environment:
+      KC_DB: mysql
+      KC_DB_URL: jdbc:mysql://mysql:3306/keycloak
+      KC_DB_PASSWORD: ${MYSQL_PASSWORD}
+      KC_DB_SCHEMA: ${MYSQL_DATABASE}
+      KC_DB_USERNAME: ${MYSQL_USER}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_HTTP_PORT: ${KEYCLOAK_HTTP_PORT}
+      KC_HOSTNAME_PORT: ${KEYCLOAK_HTTP_PORT}
+    command:
+      - start-dev
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+    networks:
+      - local-keycloak
+
+networks:
+  local-keycloak:
