@@ -1,0 +1,6 @@
+server:
+  port: 8081
+spring:
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/browser
