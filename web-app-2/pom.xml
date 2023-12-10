@@ -35,6 +35,14 @@
             <groupId>com.m0ncld.dev.sso</groupId>
             <artifactId>web-app-2-o-auth2</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.m0ncld.dev.sso</groupId>
+            <artifactId>web-app-2-keycloak</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.m0ncld.dev.sso</groupId>
+            <artifactId>web-app-2-webapp</artifactId>
+        </dependency>
         <!-- Sprint -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -22,6 +22,8 @@
 
     <properties>
         <java.version>17</java.version>
+        <node.version>v18.18.2</node.version>
+        <npm.version>10.2.2</npm.version>
         <main.basedir>${project.basedir}</main.basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -43,6 +45,7 @@
         <checkstyle.version>10.12.4</checkstyle.version>
         <release.plugin.version>3.0.0-M6</release.plugin.version>
         <dependency.plugin.version>7.4.4</dependency.plugin.version>
+        <frontend-maven-plugin.version>1.14.2</frontend-maven-plugin.version>
     </properties>
 
     <modules>
@@ -51,6 +54,9 @@
         <module>web-app-2/api</module>
         <module>web-app-2/core</module>
         <module>web-app-2/mysql</module>
+        <module>web-app-2/o-auth2</module>
+        <module>web-app-2/keycloak</module>
+        <module>web-app-2/webapp</module>
     </modules>
 
     <scm>
@@ -83,6 +89,22 @@
                 <artifactId>web-app-2-mysql</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.m0ncld.dev.sso</groupId>
+                <artifactId>web-app-2-o-auth2</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.m0ncld.dev.sso</groupId>
+                <artifactId>web-app-2-keycloak</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.m0ncld.dev.sso</groupId>
+                <artifactId>web-app-2-webapp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- spring -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -107,6 +129,21 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-oauth2-client</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
 
@@ -229,6 +266,16 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>${checkstyle.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-maven-plugin.version}</version>
+                    <configuration>
+                        <installDirectory>target</installDirectory>
+                        <nodeVersion>${node.version}</nodeVersion>
+                        <npmVersion>${npm.version}</npmVersion>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
