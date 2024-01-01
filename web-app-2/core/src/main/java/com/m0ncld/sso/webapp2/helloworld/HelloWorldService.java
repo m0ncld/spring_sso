@@ -11,7 +11,15 @@ public class HelloWorldService {
         this.repository = repository;
     }
 
-    public HelloWorldModel helloWorld() {
-        return repository.helloWorld();
+    public HelloWorldModel helloWorldAll(String name) {
+        return repository.helloWorldAll(name);
+    }
+
+    public HelloWorldModel helloWorldGuest(String name) {
+        return repository.helloWorldGuest(name);
+    }
+
+    public HelloWorldModel helloWorldUser(String name) {
+        return repository.helloWorldUser(name);
     }
 }

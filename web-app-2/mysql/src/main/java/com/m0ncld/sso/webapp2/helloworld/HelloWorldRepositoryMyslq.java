@@ -10,9 +10,28 @@ class HelloWorldRepositoryMyslq implements HelloWorldRepository {
     private final AtomicInteger versionCounter = new AtomicInteger(1);
 
     @Override
-    public HelloWorldModel helloWorld() {
+    public HelloWorldModel helloWorldAll(String name) {
         return HelloWorldModel.builder()
-                .withMessage("Hello World!")
+                .withName(name)
+                .withMessage("Hello World All!")
+                .withVersion(versionCounter.incrementAndGet())
+                .build();
+    }
+
+    @Override
+    public HelloWorldModel helloWorldGuest(String name) {
+        return HelloWorldModel.builder()
+                .withName(name)
+                .withMessage("Hello World Guest!")
+                .withVersion(versionCounter.incrementAndGet())
+                .build();
+    }
+
+    @Override
+    public HelloWorldModel helloWorldUser(String name) {
+        return HelloWorldModel.builder()
+                .withName(name)
+                .withMessage("Hello World User!")
                 .withVersion(versionCounter.incrementAndGet())
                 .build();
     }

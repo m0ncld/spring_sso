@@ -23,6 +23,10 @@
             <groupId>com.m0ncld.dev.sso</groupId>
             <artifactId>web-app-2-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.m0ncld.dev.sso</groupId>
+            <artifactId>web-app-2-o-auth2</artifactId>
+        </dependency>
         <!-- spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -31,6 +35,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <!-- test -->
         <dependency>
