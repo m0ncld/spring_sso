@@ -1,0 +1,17 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8090/realms/JavaApplication
+      client:
+        provider:
+          oidc:
+            issuer-uri: http://localhost:8090/realms/JavaApplication
+        registration:
+          oidc:
+#            client-id: java-application
+#            client-secret: H2JfDmJQl0kLZAP9cUQI4mGfmfqQHf9U
+            client-id: web_app2
+            client-secret: Q8J6Z98ZIC25XrwJ7XIXFmRsvl75ITOn
+            scope: openid, profile, email, offline_access # last one for refresh tokens
