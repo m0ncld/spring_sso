@@ -2,13 +2,14 @@ package com.m0ncld.sso.webapp2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
@@ -28,9 +29,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final LogoutHandler handler;
+    private final boolean isNoSecurityProfile;
 
-    public SecurityConfig(LogoutHandler handler) {
+    private static final String NO_SECURITY_PROFILE = "no-security";
+
+    public SecurityConfig(LogoutHandler handler, Environment environment) {
         this.handler = handler;
+        isNoSecurityProfile = environment.matchesProfiles(NO_SECURITY_PROFILE);
     }
 
     Converter<Jwt, AbstractAuthenticationToken> authenticationConverter() {
@@ -48,38 +53,15 @@ public class SecurityConfig {
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
-
-    @Order(1)
     @Bean
-    public SecurityFilterChain apiServerFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(withDefaults())
-                .csrf(csrf ->
-                        csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                                .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
-                )
-                .securityMatcher("/api/**")
+    public SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
+        setupCorsAndCsrf(http)
                 .authorizeHttpRequests(request ->
-                        request.anyRequest().permitAll()
-                )
-        ;
-        return http.build();
-    }
-
-    @Order(2)
-    @Bean
-    public SecurityFilterChain resourceServerFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
-        http
-                .cors(withDefaults())
-                .csrf(csrf ->
-                        csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                            .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
-                )
-                .authorizeHttpRequests(request ->
-                        request.requestMatchers(mvc.pattern("/")).permitAll()
-                                .requestMatchers(mvc.pattern("/index.html"), mvc.pattern("/*.js"), mvc.pattern("*.txt"), mvc.pattern("/*.json"), mvc.pattern("/*.map"), mvc.pattern("/*.css"), mvc.pattern("/*.ico")).permitAll()
-                                .requestMatchers(mvc.pattern("/app/**")).permitAll()
-                                .requestMatchers(mvc.pattern("/i18n/**")).permitAll()
+                        request.requestMatchers("/").permitAll()
+                                .requestMatchers("/index.html", "/*.js", "*.txt", "/*.json", "/*.map", "/*.css", "/*.ico").permitAll()
+                                .requestMatchers("/app/**").permitAll()
+                                .requestMatchers("/i18n/**").permitAll()
+                                .requestMatchers("/api/rest/**").permitAll()
                 );
 
         http.oauth2Login(login -> login.defaultSuccessUrl("/"))
@@ -87,6 +69,18 @@ public class SecurityConfig {
                 .oauth2Client(withDefaults())
                 .logout(logout -> logout.addLogoutHandler(handler).logoutSuccessUrl("/"));
         return http.build();
+    }
+
+    private HttpSecurity setupCorsAndCsrf(HttpSecurity http) throws Exception {
+        if (isNoSecurityProfile) {
+            return http.cors(AbstractHttpConfigurer::disable)
+                    .csrf(AbstractHttpConfigurer::disable);
+        }
+        return http.cors(withDefaults())
+                   .csrf(csrf -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
+                   );
     }
 
     @Bean
