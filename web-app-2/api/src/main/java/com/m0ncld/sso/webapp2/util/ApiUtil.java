@@ -22,6 +22,10 @@ public class ApiUtil {
         return ResponseEntity.noContent().build();
     }
 
+    public static <T> ResponseEntity<T> ok() {
+        return ResponseEntity.ok().build();
+    }
+
     public static <T> ResponseEntity<T> ok(@NotNull T body) {
         return ResponseEntity.ok(body);
     }

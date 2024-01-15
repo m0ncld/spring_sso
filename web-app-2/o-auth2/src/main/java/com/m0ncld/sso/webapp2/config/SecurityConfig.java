@@ -61,7 +61,7 @@ public class SecurityConfig {
                                 .requestMatchers("/index.html", "/*.js", "*.txt", "/*.json", "/*.map", "/*.css", "/*.ico").permitAll()
                                 .requestMatchers("/app/**").permitAll()
                                 .requestMatchers("/i18n/**").permitAll()
-                                .requestMatchers("/api/rest/**").permitAll()
+                                .requestMatchers("/api/**").permitAll()
                 );
 
         http.oauth2Login(login -> login.defaultSuccessUrl("/"))
