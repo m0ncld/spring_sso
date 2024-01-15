@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: '0.0.0.0'
+      author: 'm0ncld'
+      changes:
+        - tagDatabase:
+            tag: '0.0.0.0'
+  - include:
+      file: 'config/liquibase/1.0.0.0/changelog.yml'
