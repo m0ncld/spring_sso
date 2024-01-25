@@ -1,0 +1,88 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0.0/todo_list
+      author: m0ncld
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey:  true
+                    primaryKeyName: pk_todo_list
+                    nullable:  false
+              - column:
+                  name: name
+                  type: TEXT
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: base64_image
+                  type: BLOB
+              - column:
+                  name: created_at
+                  type: DATETIME
+                  constraints:
+                    nullable: false
+              - column:
+                  name: modified_at
+                  type: DATETIME
+                  constraints:
+                    nullable: false
+            tableName: todo_list
+  - changeSet:
+      id: 1.0.0.0/todo_list_item
+      author: m0ncld
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey:  true
+                    primaryKeyName: pk_todo_list_item
+                    nullable:  false
+              - column:
+                  name: todo_list_id
+                  type: UUID
+                  constraints:
+                    nullable:  false
+                    foreignKeyName: fk_todo_list_item_todo_list
+                    references: todo_list(id)
+              - column:
+                  name: text
+                  type: TEXT
+              - column:
+                  name: checked
+                  type: BOOLEAN
+              - column:
+                  name: position
+                  type: INTEGER
+            tableName: todo_list_item
+  - changeSet:
+      id: 1.0.0.0/todo_list_index_by_user_id
+      author: m0ncld
+      changes:
+      - createIndex:
+          clustered:  true
+          columns:
+            - column:
+                descending:  true
+                name:  user_id
+          indexName:  idx_todo_list_user_id
+          tableName:  todo_list
+          unique:  false
+

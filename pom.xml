@@ -33,7 +33,9 @@
 
         <!-- dependencies -->
         <hibernate-validator.version>6.2.5.Final</hibernate-validator.version>
-        <liquibase.version>4.16.1</liquibase.version>
+        <javax-validation.version>2.0.1.Final</javax-validation.version>
+        <liquibase.version>4.25.1</liquibase.version>
+        <mySQLDriver.version>8.0.33</mySQLDriver.version>
         <mockito.version>4.8.0</mockito.version>
         <commons-lang.version>3.12.0</commons-lang.version>
         <guava.version>31.1-jre</guava.version>
@@ -154,6 +156,11 @@
                 <version>${hibernate-validator.version}</version>
             </dependency>
             <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax-validation.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator-annotation-processor</artifactId>
                 <version>${hibernate-validator.version}</version>
@@ -202,6 +209,11 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
                 <version>${liquibase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mySQLDriver.version}</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>

@@ -1,6 +1,21 @@
 server:
   port: 8081
 spring:
-  web:
-    resources:
-      static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/browser
+  profiles:
+    group:
+      default:
+        - application
+        - api
+        - core
+        - keycloak
+        - mysql
+        - oauth2
+        - webapp
+      development:
+        - dev
+        - api-dev
+        - core-dev
+        - keycloak-dev
+        - mysql-dev
+        - oauth2-dev
+        - webapp-dev

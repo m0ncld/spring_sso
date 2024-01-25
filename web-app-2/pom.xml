@@ -122,12 +122,6 @@
         <resources>
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/application*.yml</include>
-                    <include>**/logback-spring.xml</include>
-                    <include>**/banner.txt</include>
-                </includes>
             </resource>
         </resources>
     </build>
