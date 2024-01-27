@@ -8,7 +8,7 @@ import java.util.Optional;
  * @param <M> Model
  * @param <I> Model identifier
  */
-public interface GenericCrudRepository<M extends Model<I>, I> {
+public interface GenericCrudRepository<M extends Model<I>, I> extends GenericReadRepository<M, I> {
 
     /**
      * Save the model
@@ -23,39 +23,6 @@ public interface GenericCrudRepository<M extends Model<I>, I> {
      * @return Collection of saved models
      */
     Collection<M> saveAll(Collection<M> models);
-
-    /**
-     * Find the model by identifier
-     * @param id identifier
-     * @return Model
-     */
-    Optional<M> findById(I id);
-
-    /**
-     * Returns true if the model exist, false if not
-     * @param id Model identifier
-     * @return True if the model exist, false if not
-     */
-    boolean existsById(I id);
-
-    /**
-     * Finds all models
-     * @return All models
-     */
-    Collection<M> findAll();
-
-    /**
-     * Finds all models of given identifiers
-     * @param ids Model identifiers
-     * @return Collection of models
-     */
-    Collection<M> findAllById(Collection<I> ids);
-
-    /**
-     * Returns number of models
-     * @return Number of models
-     */
-    long count();
 
     /**
      * Delete model with given identifier
