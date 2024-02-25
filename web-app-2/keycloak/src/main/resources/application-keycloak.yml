@@ -1,0 +1,6 @@
+attribute-mapping:
+  id: sub
+  firstName: preferred_username
+  lastName: given_name
+  userName: family_name
+
