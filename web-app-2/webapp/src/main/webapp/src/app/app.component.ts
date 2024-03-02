@@ -1,13 +1,14 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
-import {BaseViewComponent} from "./components/base-view/base-view.component";
-import {HomeViewComponent} from "./views/home-view/home-view.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, BaseViewComponent, HomeViewComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })

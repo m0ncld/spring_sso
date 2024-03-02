@@ -1,28 +1,25 @@
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Web Application 2</a>
+    <a class="navbar-brand" href="/">TODO List Web Application</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">My lists</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Add list</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Browse list</a>
-        </li>
+        @for (route of routing; track route.path) {
+          <li class="nav-item">
+            <a class="nav-link" (click)="changeRoute(route.path)" [ngClass]="{'active': route.active}">{{ route.title }}</a>
+          </li>
+        }
       </ul>
       <form class="d-flex">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Login</a>
+            @if (user?.authenticated === true) {
+              <a class="nav-link" href="/logout">Logout</a>
+            } @else {
+              <a class="nav-link" href="/oauth2/authorization/oidc">Login</a>
+            }
           </li>
         </ul>
       </form>
